@@ -1,0 +1,6 @@
+c:\users\joel\documents\visual studio 2015\Projects\ircTest2\ircTest2\bin\Debug\ircTest2.exe.config
+c:\users\joel\documents\visual studio 2015\Projects\ircTest2\ircTest2\bin\Debug\ircTest2.exe
+c:\users\joel\documents\visual studio 2015\Projects\ircTest2\ircTest2\bin\Debug\ircTest2.pdb
+c:\users\joel\documents\visual studio 2015\Projects\ircTest2\ircTest2\obj\Debug\ircTest2.exe
+c:\users\joel\documents\visual studio 2015\Projects\ircTest2\ircTest2\obj\Debug\ircTest2.pdb
+c:\users\joel\documents\visual studio 2015\Projects\ircTest2\ircTest2\obj\Debug\ircTest2.csprojResolveAssemblyReference.cache
