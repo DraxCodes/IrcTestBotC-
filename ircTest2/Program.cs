@@ -44,7 +44,7 @@ namespace ircTest2 {
         }
 
         public void sendChatMessage (string message, string channel) {
-            outputStream.Write("MSG {0} {1}\r\n", channel, message);
+            outputStream.Write("PRIVMSG {0} {1}\r\n", channel, message);
             outputStream.Flush();
         }
 
