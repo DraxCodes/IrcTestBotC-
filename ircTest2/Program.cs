@@ -14,7 +14,7 @@ namespace ircTest2 {
             tcpClient = new TcpClient(ip, port);
             inputStream = new StreamReader(tcpClient.GetStream());
             outputStream = new StreamWriter(tcpClient.GetStream());
-            registerConection("WarzoneBotTest", "Warzone", true);
+            registerConection("WarzoneBotTest", "Warzone", "JPC", "p2p", true);
         }
 
         /// <summary>
@@ -23,11 +23,12 @@ namespace ircTest2 {
         /// <param name="nick">Bot Nickname as String</param>
         /// <param name="realName">Owner Name as String</param>
         /// <param name="visibilty">True: Visibile - False: None Visible</param>
-        private void registerConection ( string nick, string realName, bool visibilty ) {
+        private void registerConection ( string nick, string realName, string hostName, string serverName, bool visibilty ) {
             this.userName = nick;
             int isInvisible = visibilty ? 0 : 8;
 
-            outputStream.Write("USER {0} {1} * :{2}\r\n", nick, isInvisible, realName);
+            // outputStream.Write("USER {0} {1} * :{2}\r\n", nick, isInvisible, realName);
+            outputStream.Write("USER {0} {1} {2} {3}\r\n", nick, hostName, serverName, realName);
             outputStream.Flush();
             outputStream.Write("NICK {0}\r\n", nick);
             outputStream.Flush();
