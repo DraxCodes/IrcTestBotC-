@@ -27,15 +27,16 @@ namespace ircTest2 {
             this.userName = nick;
             int isInvisible = visibilty ? 0 : 8;
 
-            outputStream.WriteLine("USER {0} {1} * :{2}", nick, isInvisible, realName);
+            outputStream.Write("USER {0} {1} * :{2}\r\n", nick, isInvisible, realName);
             outputStream.Flush();
-            outputStream.WriteLine("NICK {0}", nick);
+            outputStream.Write("NICK {0}\r\n", nick);
             outputStream.Flush();
         }
+
         public void joinRoom (string channel) {
             if ( channel.Contains("#") != true ) {
-                outputStream.WriteLine("JOIN #{0}", channel); outputStream.Flush();
-            } else { outputStream.WriteLine("JOIN {0}", channel); outputStream.Flush(); }
+                outputStream.Write("JOIN #{0}\r\n", channel); outputStream.Flush();
+            } else { outputStream.Write("JOIN {0}\r\n", channel); outputStream.Flush(); }
         }
 
         public void sendIrcMessage (string message) {
@@ -43,7 +44,7 @@ namespace ircTest2 {
         }
 
         public void sendChatMessage (string message, string channel) {
-            outputStream.WriteLine("MSG {0} {1}", channel, message);
+            outputStream.Write("MSG {0} {1}\r\n", channel, message);
             outputStream.Flush();
         }
 
@@ -55,7 +56,7 @@ namespace ircTest2 {
         public void PONG (string ping) {
             char[] del = { ':' };
             string[] splitPING = ping.Split(del);
-            outputStream.WriteLine("PONG :{0}", splitPING[1]);
+            outputStream.Write("PONG {0}\r\n", splitPING[1]);
             Console.WriteLine(">>> PONG :{0}", splitPING[1]);
         }
     }
