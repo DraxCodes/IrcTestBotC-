@@ -58,7 +58,7 @@ namespace ircTest2 {
             char[] del = { ':' };
             string[] splitPING = ping.Split(del);
             outputStream.Write("PONG {0}\r\n", splitPING[1]);
-            Console.WriteLine(">>> PONG :{0}", splitPING[1]);
+            Console.WriteLine("<<< PONG :{0}", splitPING[1]);
         }
     }
     class Program {
