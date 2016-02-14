@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.IO;
+using System.Text;
+using System.Threading;
 
 namespace ircTest2 {
 
@@ -11,10 +13,23 @@ namespace ircTest2 {
         private StreamWriter outputStream;
 
         public IrcClient ( string ip, int port ) {
-            tcpClient = new TcpClient(ip, port);
-            inputStream = new StreamReader(tcpClient.GetStream());
-            outputStream = new StreamWriter(tcpClient.GetStream());
-            registerConection("WarzoneBotTest", "Warzone", "JPC", "p2p", true);
+            try {
+                tcpClient = new TcpClient(ip, port);
+                inputStream = new StreamReader(tcpClient.GetStream());
+                outputStream = new StreamWriter(tcpClient.GetStream());
+            } catch {
+                Console.WriteLine("Connection Error");
+                throw;
+            }
+            try {
+                if (inputStream.ReadLine().Contains("PING")) {
+
+                }
+                registerConection("WarzoneBotTest", "Warzone", "JPC", "p2p", true);
+            } catch {
+                Console.WriteLine("Register Error");
+                throw;
+            }
         }
 
         /// <summary>
@@ -26,11 +41,15 @@ namespace ircTest2 {
         private void registerConection ( string nick, string realName, string hostName, string serverName, bool visibilty ) {
             this.userName = nick;
             int isInvisible = visibilty ? 0 : 8;
+            string test = "USER " + nick + " " + isInvisible + " * :" + realName;
+            byte[] bytes = Encoding.Default.GetBytes(test);
+            var data = Encoding.UTF8.GetString(bytes);
 
-            // outputStream.Write("USER {0} {1} * :{2}\r\n", nick, isInvisible, realName);
-            outputStream.Write("USER {0} {1} {2} {3}\r\n", nick, hostName, serverName, realName);
+            // outputStream.Write("USER {0} {1} * :{2}\r\n", nick, isInvisible, realName);#
+            outputStream.Write(data);
+            Console.WriteLine("<<< " + data);
             outputStream.Flush();
-            outputStream.Write("NICK {0}\r\n", nick);
+            outputStream.Write("NICK {0}", nick);
             outputStream.Flush();
         }
 
@@ -55,8 +74,7 @@ namespace ircTest2 {
         }
 
         public void PONG (string ping) {
-            char[] del = { ':' };
-            string[] splitPING = ping.Split(del);
+            string[] splitPING = ping.Split(':');
             outputStream.Write("PONG {0}\r\n", splitPING[1]);
             Console.WriteLine("<<< PONG :{0}", splitPING[1]);
         }
